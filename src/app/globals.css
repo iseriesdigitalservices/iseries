@@ -1,0 +1,237 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --color-brand: #111111;
+  --color-brand-dark: #000000;
+  --color-navy: #1a1a1a;
+  --color-navy-dark: #0a0a0a;
+  --color-gold: #f5c518;
+  --color-cream: #f6f4ef;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  overflow-x: clip;
+}
+
+body {
+  font-family: var(--font-sans);
+  overflow-x: clip;
+  min-height: 100dvh;
+}
+
+.urdu {
+  font-family: "Noto Nastaliq Urdu", "Jameel Noor Nastaleeq", serif;
+  direction: rtl;
+  line-height: 2.1;
+}
+
+.graffiti {
+  font-family: "Rubik Wet Paint", "Permanent Marker", cursive;
+  text-transform: uppercase;
+  line-height: 0.95;
+}
+
+/* ---------- mobile: no zoom-on-focus, nothing wider than the screen ---------- */
+@media (max-width: 767px) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+  button,
+  a[class*="rounded-full"],
+  summary {
+    min-height: 40px;
+  }
+}
+img,
+video,
+svg {
+  max-width: 100%;
+}
+.break-anywhere {
+  overflow-wrap: anywhere;
+}
+
+/* =====================================================================
+   DARK MODE  (toggled by the .dark class on <html>)
+   The site is built with light utility classes; these overrides remap them.
+   ===================================================================== */
+.dark {
+  color-scheme: dark;
+}
+.dark body {
+  background: #0b0d10;
+  color: #e6e8ec;
+}
+.dark ::placeholder {
+  color: #6b7280;
+}
+
+/* surfaces */
+.dark .bg-white {
+  background-color: #171a21;
+}
+.dark .bg-\[\#f6f4ef\] {
+  background-color: #0f1217;
+}
+.dark .bg-\[\#f6f4ef\]\/95 {
+  background-color: rgb(11 13 16 / 0.95);
+}
+.dark .bg-slate-50 {
+  background-color: #11141a;
+}
+.dark .bg-slate-100 {
+  background-color: #0b0d10;
+}
+.dark .bg-slate-200 {
+  background-color: #2a2f3a;
+}
+.dark .bg-slate-300 {
+  background-color: #3a4150;
+}
+.dark .bg-white\/90,
+.dark .bg-white\/95 {
+  background-color: rgb(23 26 33 / 0.95);
+}
+
+/* text */
+.dark .text-slate-900,
+.dark .text-slate-800 {
+  color: #f1f5f9;
+}
+.dark .text-slate-700 {
+  color: #cbd5e1;
+}
+.dark .text-slate-600 {
+  color: #b4bcc8;
+}
+.dark .text-slate-500 {
+  color: #98a2b3;
+}
+.dark .text-neutral-500 {
+  color: #98a2b3;
+}
+.dark .text-black:not([class*="bg-gold"]):not([class*="bg-[#f5c518]"]):not([class*="bg-green-"]):not([class*="bg-amber-"]) {
+  color: #f1f5f9;
+}
+
+/* borders / dividers / rings */
+.dark .border-slate-100,
+.dark .border-slate-200,
+.dark .border-slate-300 {
+  border-color: #2a2f3a;
+}
+.dark .border-black\/10,
+.dark .border-black\/5 {
+  border-color: rgb(255 255 255 / 0.1);
+}
+.dark .divide-slate-100 > :not(:last-child),
+.dark .divide-slate-200 > :not(:last-child) {
+  border-color: #2a2f3a;
+}
+.dark .ring-black\/5,
+.dark .ring-black\/10,
+.dark .ring-black\/15,
+.dark .ring-slate-200,
+.dark .ring-slate-300 {
+  --tw-ring-color: rgb(255 255 255 / 0.12);
+}
+
+/* black buttons/chips would vanish on dark cards: give them a gold edge */
+.dark button.bg-black,
+.dark a.bg-black {
+  box-shadow: inset 0 0 0 1px rgb(245 197 24 / 0.45);
+}
+.dark .hover\:bg-slate-100:hover,
+.dark .hover\:bg-black\/5:hover {
+  background-color: rgb(255 255 255 / 0.06);
+}
+
+/* colour chips (status badges, notices) */
+.dark .bg-amber-50 { background-color: rgb(245 158 11 / 0.12); }
+.dark .bg-amber-100 { background-color: rgb(245 158 11 / 0.2); }
+.dark .bg-blue-50 { background-color: rgb(59 130 246 / 0.12); }
+.dark .bg-blue-100 { background-color: rgb(59 130 246 / 0.2); }
+.dark .bg-green-50 { background-color: rgb(34 197 94 / 0.12); }
+.dark .bg-green-100 { background-color: rgb(34 197 94 / 0.2); }
+.dark .bg-red-50 { background-color: rgb(239 68 68 / 0.12); }
+.dark .bg-red-100 { background-color: rgb(239 68 68 / 0.2); }
+.dark .text-amber-700, .dark .text-amber-800, .dark .text-amber-900 { color: #fcd34d; }
+.dark .text-blue-700, .dark .text-blue-800, .dark .text-blue-900 { color: #93c5fd; }
+.dark .text-green-700, .dark .text-green-800, .dark .text-green-900 { color: #86efac; }
+.dark .text-red-600, .dark .text-red-700, .dark .text-red-800 { color: #fca5a5; }
+.dark .text-blue-600 { color: #60a5fa; }
+.dark .text-green-600 { color: #4ade80; }
+.dark .text-amber-600 { color: #fbbf24; }
+.dark .ring-amber-200, .dark .ring-amber-300 { --tw-ring-color: rgb(245 158 11 / 0.45); }
+.dark .ring-blue-200, .dark .ring-blue-300 { --tw-ring-color: rgb(59 130 246 / 0.45); }
+.dark .ring-green-200, .dark .ring-green-300 { --tw-ring-color: rgb(34 197 94 / 0.45); }
+.dark .border-green-200 { border-color: rgb(34 197 94 / 0.3); }
+
+/* ---- safety net: brand colours that are nearly black ---- */
+.dark .text-navy,
+.dark .text-navy-dark,
+.dark .text-brand,
+.dark .text-brand-dark {
+  color: #f1f5f9;
+}
+.dark .text-slate-400 {
+  color: #94a3b8;
+}
+
+/* form fields keep a readable dark surface */
+.dark input:not([type="checkbox"]):not([type="radio"]),
+.dark select,
+.dark textarea {
+  background-color: #11141a;
+  color: #e6e8ec;
+  border-color: #2a2f3a;
+}
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: #6b7280;
+}
+.dark .focus\:border-black:focus,
+.dark input:focus,
+.dark select:focus,
+.dark textarea:focus {
+  border-color: #f5c518;
+}
+.dark input[type="file"] {
+  background-color: transparent;
+  border: none;
+}
+.dark input[type="file"]::file-selector-button {
+  background-color: #2a2f3a;
+  color: #e6e8ec;
+  border: 1px solid #3a4150;
+  border-radius: 8px;
+  padding: 6px 12px;
+  margin-right: 10px;
+}
+
+/* code / pre blocks (admin password vault, email log) */
+.dark code,
+.dark pre {
+  color: #f1f5f9;
+}
+
+/* keep text dark where the background stays light in dark mode */
+.dark .bg-gold,
+.dark .bg-\[\#f5c518\],
+.dark .bg-green-500,
+.dark .bg-yellow-400 {
+  color: #0a0a0a;
+}
+.dark .bg-green-500 {
+  color: #ffffff;
+}
+.dark .bg-gold *,
+.dark .bg-\[\#f5c518\] * {
+  color: inherit;
+}
