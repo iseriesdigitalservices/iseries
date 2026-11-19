@@ -47,6 +47,7 @@ cannot be moved or renamed. The files inside it are deliberately thin: API route
 If a frontend component ever tries to import backend code, **the build fails on purpose**.
 Your database connection string and secrets can never leak into the browser.
 
+<<<<<<< HEAD
 ### Changing content
 
 You normally **do not edit code** for this. Log in to `/admin` and use **Website Settings**
@@ -54,6 +55,12 @@ and **Services**. Everything lives in the database.
 
 `src/shared/site.ts` only holds the *starting* values that are copied into the database the
 very first time the site runs.
+=======
+### The file you will edit most
+
+`src/shared/site.ts` — change prices, add or remove services, edit phone numbers, email,
+the referral rate (`REFERRAL_RATE`) and the FAQs.
+>>>>>>> origin/main
 
 ---
 
@@ -127,6 +134,7 @@ domain points at it.
 
 `/admin` — not linked anywhere on the website and hidden from search engines.
 
+<<<<<<< HEAD
 **Signing in:** admins log in with their own **email and password**. The first time you open
 `/admin` it asks you to create the owner account; it requires the **setup key**, which is the
 `ADMIN_PASSWORD` value in your environment. After that account exists the setup screen is gone
@@ -143,6 +151,13 @@ and the setup key can no longer be used to sign in.
 
 Everything the admin changes is stored in the database and appears on the live website
 immediately — no code editing and no redeploy needed.
+=======
+- **Orders** — verify payment slip → *In process* → progress updates → *Process done* + delivery
+- **Users** — activate / deactivate / hold / pending / delete, see and set passwords, full activity log, referral payouts
+- **Inquiries** — contact-form messages, reply by email
+- **Payment Accounts** — the bank / EasyPaisa / JazzCash details shown at checkout
+- **Notifications** — connect Gmail & WhatsApp alerts, send email, see the log
+>>>>>>> origin/main
 
 All long lists show **10 per page** with Previous / Next buttons.
 
@@ -170,14 +185,19 @@ If the database is lost, those documents are lost with it.
 
 ## Security built in
 
+<<<<<<< HEAD
 - **Admin accounts with email + password** (scrypt hashed), owner / admin roles, accounts can be disabled instantly
 - Admin session ends on leaving the admin panel, plus a 60-minute idle timeout and an 8-hour maximum
+=======
+- Admin session ends on leaving the admin panel, plus a 90-minute idle timeout
+>>>>>>> origin/main
 - Rate limiting on login, registration, password reset, orders and inquiries; lockout after 6 wrong passwords
 - Passwords hashed with scrypt; a separate AES-256-GCM encrypted copy lets the admin help users (viewing it is logged)
 - Password reset by 6-digit email code (10 minutes, 5 attempts)
 - CSRF protection, HttpOnly cookies, security headers + CSP
 - Uploads checked by real file content (JPG / PNG / WEBP / PDF only); documents are private to the owner and the admin
 - `server-only` boundary between `src/backend` and the browser
+<<<<<<< HEAD
 - Every admin action is written to an audit log (who, what, when, from which IP)
 - Login attempts are limited per IP **and** per account; repeated failures email you an alert
 - All database queries use string-coerced input, so NoSQL injection is not possible
@@ -188,6 +208,11 @@ If the database is lost, those documents are lost with it.
 3. Set `COOKIE_SAMESITE=lax`
 4. Open `/admin`, create your owner account with a strong password, then check the
    **Security → Security checklist** — every line should show a green tick
+=======
+
+**Before going live:** change `ADMIN_PASSWORD` from `1234`, set a long `AUTH_SECRET`,
+and set `COOKIE_SAMESITE=lax`.
+>>>>>>> origin/main
 
 ---
 

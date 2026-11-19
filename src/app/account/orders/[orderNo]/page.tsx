@@ -6,8 +6,12 @@ import Footer from "@/frontend/components/Footer";
 import ResubmitForm from "@/frontend/components/ResubmitForm";
 import { getCurrentUser } from "@/backend/auth";
 import { cols, hex } from "@/backend/mongo";
+<<<<<<< HEAD
 import { ORDER_STATUS, formatPKR } from "@/shared/site";
 import { getSite } from "@/backend/config";
+=======
+import { ORDER_STATUS, SITE, formatPKR } from "@/shared/site";
+>>>>>>> origin/main
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Order details — I Series Digital Services" };
@@ -25,7 +29,10 @@ function Row({ k, v }: { k: string; v?: string | null }) {
 
 export default async function MyOrder({ params }: { params: Promise<{ orderNo: string }> }) {
   const { orderNo } = await params;
+<<<<<<< HEAD
   const SITE = await getSite();
+=======
+>>>>>>> origin/main
   const user = await getCurrentUser();
   if (!user) redirect(`/login?next=${encodeURIComponent(`/account/orders/${orderNo}`)}`);
   const { orders, orderEvents, files } = await cols();

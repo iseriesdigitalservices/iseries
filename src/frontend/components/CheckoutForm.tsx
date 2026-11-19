@@ -4,8 +4,12 @@ import { useState } from "react";
 import Link from "next/link";
 import { CheckCircle2, Copy, Landmark, Loader2, Smartphone, Upload } from "lucide-react";
 import { useCart } from "./CartProvider";
+<<<<<<< HEAD
 import { formatPKR } from "@/shared/site";
 import { useCatalog, useSite } from "@/frontend/SiteProvider";
+=======
+import { PRICES, SITE, docsFor, formatPKR, getService } from "@/shared/site";
+>>>>>>> origin/main
 
 type Method = {
   id: string;
@@ -57,8 +61,11 @@ function DocUpload({ name, label, required }: { name: string; label: string; req
 }
 
 export default function CheckoutForm({ methods, user }: { methods: Method[]; user: { name: string; email: string; phone: string; country: string } }) {
+<<<<<<< HEAD
   const SITE = useSite();
   const catalog = useCatalog();
+=======
+>>>>>>> origin/main
   const { items, total, ready, clear } = useCart();
   const [methodId, setMethodId] = useState<string | null>(methods[0]?.id ?? null);
   const [slipName, setSlipName] = useState("");
@@ -76,7 +83,11 @@ export default function CheckoutForm({ methods, user }: { methods: Method[]; use
     const slip = fd.get("slip");
     if (!(slip instanceof File) || slip.size === 0) return setError("Please upload your payment slip.");
     if (slip.size > 5 * 1024 * 1024) return setError("Slip is too large (max 5 MB).");
+<<<<<<< HEAD
     for (const d of catalog.docsFor(items)) {
+=======
+    for (const d of docsFor(items)) {
+>>>>>>> origin/main
       const f = fd.get(d.key);
       const has = f instanceof File && f.size > 0;
       if (!has && d.required) return setError(`Please upload: ${d.label}.`);
@@ -95,7 +106,11 @@ export default function CheckoutForm({ methods, user }: { methods: Method[]; use
         setLoading(false);
         return;
       }
+<<<<<<< HEAD
       setDone({ orderNo: json.orderNo, phone: String(fd.get("phone")), name: String(fd.get("name")), total: json.total ?? total, services: items.map((s) => catalog.get(s)?.title ?? s) });
+=======
+      setDone({ orderNo: json.orderNo, phone: String(fd.get("phone")), name: String(fd.get("name")), total: json.total ?? total, services: items.map((s) => getService(s)?.title ?? s) });
+>>>>>>> origin/main
       clear();
     } catch {
       setError("Network error. Please try again.");
@@ -118,7 +133,11 @@ export default function CheckoutForm({ methods, user }: { methods: Method[]; use
           The admin will verify and approve your payment, then your service will be delivered.
         </p>
         <a
+<<<<<<< HEAD
           href={`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(`Hello, I placed order ${done.orderNo}.\nName: ${done.name}\nServices: ${done.services.join(", ")}\nTotal: ${formatPKR(done.total)}\nI have uploaded my payment slip.`)}`}
+=======
+          href={`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(`Assalam o Alaikum, I placed order ${done.orderNo}.\nName: ${done.name}\nServices: ${done.services.join(", ")}\nTotal: ${formatPKR(done.total)}\nI have uploaded my payment slip.`)}`}
+>>>>>>> origin/main
           target="_blank"
           rel="noreferrer"
           className="mt-6 flex items-center justify-center gap-2 rounded-full bg-green-500 px-7 py-3 font-semibold text-white hover:bg-green-600"
@@ -148,7 +167,11 @@ export default function CheckoutForm({ methods, user }: { methods: Method[]; use
   }
 
   const selected = methods.find((m) => m.id === methodId);
+<<<<<<< HEAD
   const docs = catalog.docsFor(items);
+=======
+  const docs = docsFor(items);
+>>>>>>> origin/main
 
   return (
     <form onSubmit={onSubmit} className="mt-8 grid gap-8 lg:grid-cols-5">
@@ -279,8 +302,13 @@ export default function CheckoutForm({ methods, user }: { methods: Method[]; use
         <ul className="divide-y divide-slate-100 text-sm">
           {items.map((slug) => (
             <li key={slug} className="flex justify-between gap-3 py-2.5">
+<<<<<<< HEAD
               <span className="text-slate-700">{catalog.get(slug)?.title}</span>
               <span className="whitespace-nowrap font-semibold">{formatPKR(catalog.prices[slug] ?? 0)}</span>
+=======
+              <span className="text-slate-700">{getService(slug)?.title}</span>
+              <span className="whitespace-nowrap font-semibold">{formatPKR(PRICES[slug] ?? 0)}</span>
+>>>>>>> origin/main
             </li>
           ))}
         </ul>

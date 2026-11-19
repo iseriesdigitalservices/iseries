@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 "use client";
 
+=======
+>>>>>>> origin/main
 import Link from "next/link";
 import {
   ArrowRight,
@@ -18,8 +21,12 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import AddToCartButton from "./AddToCartButton";
+<<<<<<< HEAD
 import { formatPKR, type Service, type SiteConfig } from "@/shared/site";
 import { useSite } from "@/frontend/SiteProvider";
+=======
+import { SITE, formatPKR, type Service } from "@/shared/site";
+>>>>>>> origin/main
 
 const ICONS: Record<string, LucideIcon> = {
   BookUser,
@@ -40,6 +47,7 @@ export function ServiceIcon({ name, className = "h-6 w-6" }: { name: string; cla
   return <I className={className} />;
 }
 
+<<<<<<< HEAD
 export function quoteLink(s: Service, site: Pick<SiteConfig, "whatsapp">) {
   return `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(`Hello, I would like a quote for ${s.title}.`)}`;
 }
@@ -49,6 +57,16 @@ export default function ServiceCard({ s }: { s: Service }) {
   const quote = (
     <a
       href={quoteLink(s, site)}
+=======
+export function quoteLink(s: Service) {
+  return `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(`Assalam o Alaikum, I need a quote for ${s.title}.`)}`;
+}
+
+export default function ServiceCard({ s }: { s: Service }) {
+  const quote = (
+    <a
+      href={quoteLink(s)}
+>>>>>>> origin/main
       target="_blank"
       rel="noreferrer"
       className="flex shrink-0 items-center gap-1.5 rounded-full bg-black px-4 py-2.5 text-sm font-bold text-[#f5c518]"
@@ -103,7 +121,11 @@ export default function ServiceCard({ s }: { s: Service }) {
           <>
             <p className="text-lg font-black text-black">On work basis</p>
             <a
+<<<<<<< HEAD
               href={quoteLink(s, site)}
+=======
+              href={quoteLink(s)}
+>>>>>>> origin/main
               target="_blank"
               rel="noreferrer"
               className="mt-5 flex items-center justify-center gap-2 rounded-xl bg-black px-4 py-2.5 text-sm font-semibold text-[#f5c518] hover:bg-neutral-800"

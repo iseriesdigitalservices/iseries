@@ -7,6 +7,7 @@ import Footer from "@/frontend/components/Footer";
 import PageBanner from "@/frontend/components/PageBanner";
 import AddToCartButton from "@/frontend/components/AddToCartButton";
 import ServiceCard, { ServiceIcon, quoteLink } from "@/frontend/components/ServiceCard";
+<<<<<<< HEAD
 import { findService, formatPKR } from "@/shared/site";
 import { getServices, getSite } from "@/backend/config";
 
@@ -15,6 +16,17 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const s = findService(await getServices(), (await params).slug);
   return { title: s ? s.title : "Service" };
+=======
+import { SERVICES, SITE, formatPKR, getService } from "@/shared/site";
+
+export function generateStaticParams() {
+  return SERVICES.map((s) => ({ slug: s.slug }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const s = getService((await params).slug);
+  return { title: s ? `${s.title} — I Series Digital Services` : "Service" };
+>>>>>>> origin/main
 }
 
 const STEPS = [
@@ -25,10 +37,16 @@ const STEPS = [
 ];
 
 export default async function ServiceDetail({ params }: { params: Promise<{ slug: string }> }) {
+<<<<<<< HEAD
   const [services, SITE] = await Promise.all([getServices(), getSite()]);
   const s = findService(services, (await params).slug);
   if (!s) notFound();
   const others = services.filter((x) => x.slug !== s.slug).slice(0, 3);
+=======
+  const s = getService((await params).slug);
+  if (!s) notFound();
+  const others = SERVICES.filter((x) => x.slug !== s.slug).slice(0, 3);
+>>>>>>> origin/main
 
   return (
     <div>
@@ -101,7 +119,11 @@ export default async function ServiceDetail({ params }: { params: Promise<{ slug
                 <p className="mt-1 text-3xl font-black text-gold">On work basis</p>
                 <p className="mt-2 text-sm text-slate-300">Price depends on the work. Contact us for an exact quote.</p>
                 <a
+<<<<<<< HEAD
                   href={quoteLink(s, SITE)}
+=======
+                  href={quoteLink(s)}
+>>>>>>> origin/main
                   target="_blank"
                   rel="noreferrer"
                   className="mt-5 flex items-center justify-center gap-2 rounded-xl bg-gold px-6 py-3.5 font-bold text-black"

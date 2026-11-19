@@ -21,8 +21,12 @@ import ContactForm from "@/frontend/components/ContactForm";
 import FaqList from "@/frontend/components/FaqList";
 import ServiceCard, { ServiceIcon } from "@/frontend/components/ServiceCard";
 import { LogoMark } from "@/frontend/components/Logo";
+<<<<<<< HEAD
 import { findService, formatPKR, priceMap, pct } from "@/shared/site";
 import { getServices, getSite } from "@/backend/config";
+=======
+import { PRICES, REFERRAL_RATE, SERVICES, SITE, formatPKR, getService } from "@/shared/site";
+>>>>>>> origin/main
 
 const WHY = [
   { icon: BadgeCheck, title: "Trusted & Reliable", urdu: "معتبر اور قابل اعتماد", text: "Years of experience helping overseas Pakistanis." },
@@ -41,6 +45,7 @@ const STEPS = [
 
 const FEATURED = ["passport", "cnic", "ecl"];
 
+<<<<<<< HEAD
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
@@ -49,6 +54,9 @@ export default async function Home() {
   const REFERRAL_RATE = SITE.referralRate;
   const featured = FEATURED.map((slug) => findService(SERVICES, slug)).filter((s) => s !== undefined);
   const heroServices = featured.length ? featured : SERVICES.slice(0, 3);
+=======
+export default function Home() {
+>>>>>>> origin/main
   return (
     <div id="top">
       <Header />
@@ -64,10 +72,20 @@ export default async function Home() {
               🇵🇰 Stay connected with your homeland
             </span>
             <h1 className="mt-5 text-4xl font-black leading-[1.05] sm:text-5xl lg:text-6xl">
+<<<<<<< HEAD
               {SITE.heroTitle} {SITE.heroHighlight && <span className="text-gold">{SITE.heroHighlight}</span>}
             </h1>
             {SITE.heroUrdu && <p className="urdu mt-3 text-2xl font-semibold text-gold sm:text-3xl">{SITE.heroUrdu}</p>}
             <p className="mt-4 max-w-xl text-base text-slate-200 sm:text-lg">{SITE.heroText}</p>
+=======
+              Unblocking <span className="text-gold">&amp; Exit Support</span>
+            </h1>
+            <p className="urdu mt-3 text-2xl font-semibold text-gold sm:text-3xl">اب سفر میں کوئی رکاوٹ نہیں!</p>
+            <p className="mt-4 max-w-xl text-base text-slate-200 sm:text-lg">
+              Passport, CNIC, ECL, PCL, FIR, CRO, degrees, NADRA &amp; more — professional guidance, trust and solutions for
+              Pakistanis living anywhere in the world.
+            </p>
+>>>>>>> origin/main
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <Link
                 href="/services"
@@ -99,8 +117,13 @@ export default async function Home() {
           </div>
 
           <div className="grid gap-4">
+<<<<<<< HEAD
             {heroServices.map((s) => {
               const slug = s.slug;
+=======
+            {FEATURED.map((slug) => {
+              const s = getService(slug)!;
+>>>>>>> origin/main
               return (
                 <Link
                   key={slug}
@@ -197,15 +220,25 @@ export default async function Home() {
             <p className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-gold">
               <Gift className="h-4 w-4" /> Refer &amp; Earn
             </p>
+<<<<<<< HEAD
             <h2 className="mt-2 text-3xl font-black sm:text-4xl">Bring your friends and earn {pct(REFERRAL_RATE)}% on every order</h2>
             <p className="mt-2 max-w-2xl text-slate-300">
               Create a free account and share your referral link. Whenever someone new orders through your link and the payment is approved, {pct(REFERRAL_RATE)}% is yours. The more new people you bring, the more profit you make.
+=======
+            <h2 className="mt-2 text-3xl font-black sm:text-4xl">Bring your friends and earn {REFERRAL_RATE * 100}% on every order</h2>
+            <p className="mt-2 max-w-2xl text-slate-300">
+              Create a free account and share your referral link. Whenever someone new orders through your link and the payment is approved, {REFERRAL_RATE * 100}% is yours. The more new people you bring, the more profit you make.
+>>>>>>> origin/main
             </p>
             <div className="mt-8 grid gap-4 sm:grid-cols-3">
               {[
                 { i: UserPlus, t: "1. Create an account", d: "Register and get your personal referral link and code." },
                 { i: Gift, t: "2. Share your link", d: "New customers sign up with your link and place their orders." },
+<<<<<<< HEAD
                 { i: Wallet, t: `3. Earn ${pct(REFERRAL_RATE)}%`, d: "As soon as the payment is approved the commission shows in your profile and the admin deposits it to you." },
+=======
+                { i: Wallet, t: `3. ${REFERRAL_RATE * 100}% payein`, d: "As soon as the payment is approved the commission shows in your profile and the admin deposits it to you." },
+>>>>>>> origin/main
               ].map(({ i: I, t: title, d }) => (
                 <div key={title} className="rounded-2xl bg-white/10 p-5 ring-1 ring-white/15">
                   <I className="h-7 w-7 text-gold" />

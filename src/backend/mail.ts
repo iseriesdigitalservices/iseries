@@ -2,6 +2,7 @@ import "server-only"; // backend only — never bundled into the browser
 import nodemailer from "nodemailer";
 import { headers } from "next/headers";
 import { ObjectId, cols } from "@/backend/mongo";
+<<<<<<< HEAD
 import { getSite } from "@/backend/config";
 
 /** Where admin notifications go. */
@@ -9,6 +10,12 @@ import { getSite } from "@/backend/config";
 export async function adminEmail() {
   return process.env.NOTIFY_EMAIL || (await getSite()).email;
 }
+=======
+import { SITE } from "@/shared/site";
+
+/** Where admin notifications go. */
+export const ADMIN_EMAIL = process.env.NOTIFY_EMAIL || SITE.email;
+>>>>>>> origin/main
 
 export async function getSetting(key: string): Promise<string | null> {
   try {
@@ -53,7 +60,11 @@ type Creds = { user: string; pass: string; host: string; port: number };
 async function creds(): Promise<Creds | null> {
   const pass = (process.env.SMTP_PASS || (await getSetting("smtp_pass")) || "").replace(/\s+/g, "");
   if (!pass) return null;
+<<<<<<< HEAD
   const user = process.env.SMTP_USER || (await getSetting("smtp_user")) || (await getSite()).email;
+=======
+  const user = process.env.SMTP_USER || (await getSetting("smtp_user")) || SITE.email;
+>>>>>>> origin/main
   return { user, pass, host: process.env.SMTP_HOST || "smtp.gmail.com", port: Number(process.env.SMTP_PORT || 465) };
 }
 
@@ -85,7 +96,11 @@ async function relayToAdmin(m: MailInput): Promise<{ ok: boolean; error?: string
   }
   try {
     const origin = await baseUrl();
+<<<<<<< HEAD
     const res = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(await adminEmail())}`, {
+=======
+    const res = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(ADMIN_EMAIL)}`, {
+>>>>>>> origin/main
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "application/json", Origin: origin, Referer: origin + "/" },
       body: JSON.stringify({
@@ -123,7 +138,11 @@ export async function sendMail(m: MailInput): Promise<{ ok: boolean; error?: str
         auth: { user: c.user, pass: c.pass },
       });
       const msg = {
+<<<<<<< HEAD
         from: `"${(await getSite()).name}" <${c.user}>`,
+=======
+        from: `"${SITE.name}" <${c.user}>`,
+>>>>>>> origin/main
         to: m.to,
         subject: m.subject,
         html: m.html,
@@ -147,7 +166,11 @@ export async function sendMail(m: MailInput): Promise<{ ok: boolean; error?: str
       error = e instanceof Error ? e.message.slice(0, 500) : "Unknown error";
       console.error("[mail]", error);
     }
+<<<<<<< HEAD
   } else if (m.to.toLowerCase() === (await adminEmail()).toLowerCase()) {
+=======
+  } else if (m.to.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
+>>>>>>> origin/main
     const r = await relayToAdmin(m);
     if (!r.ok) {
       status = "failed";

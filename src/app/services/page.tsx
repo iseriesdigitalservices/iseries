@@ -2,6 +2,7 @@ import Header from "@/frontend/components/Header";
 import Footer from "@/frontend/components/Footer";
 import PageBanner from "@/frontend/components/PageBanner";
 import ServiceCard from "@/frontend/components/ServiceCard";
+<<<<<<< HEAD
 import { getServices } from "@/backend/config";
 
 export const dynamic = "force-dynamic";
@@ -9,6 +10,13 @@ export const metadata = { title: "All Services & Prices" };
 
 export default async function ServicesPage() {
   const services = await getServices();
+=======
+import { SERVICES } from "@/shared/site";
+
+export const metadata = { title: "All Services & Prices — I Series Digital Services" };
+
+export default function ServicesPage() {
+>>>>>>> origin/main
   return (
     <div>
       <Header />
@@ -19,7 +27,11 @@ export default async function ServicesPage() {
       </PageBanner>
       <section className="bg-[#f6f4ef] py-14">
         <div className="mx-auto grid max-w-7xl gap-3 px-4 sm:grid-cols-2 sm:gap-6 sm:px-6 lg:grid-cols-3 xl:grid-cols-4">
+<<<<<<< HEAD
           {services.map((s) => (
+=======
+          {SERVICES.map((s) => (
+>>>>>>> origin/main
             <ServiceCard key={s.slug} s={s} />
           ))}
         </div>

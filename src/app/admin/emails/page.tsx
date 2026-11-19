@@ -2,7 +2,11 @@ import { cols } from "@/backend/mongo";
 import { isAdmin } from "@/backend/admin";
 import AdminForm from "@/frontend/components/AdminForm";
 import Pager, { PAGE_SIZE, pageFrom } from "@/frontend/components/Pager";
+<<<<<<< HEAD
 import { adminEmail, getSetting, mailConfigured } from "@/backend/mail";
+=======
+import { ADMIN_EMAIL, getSetting, mailConfigured } from "@/backend/mail";
+>>>>>>> origin/main
 
 export const dynamic = "force-dynamic";
 
@@ -15,7 +19,10 @@ const color: Record<string, string> = {
 
 export default async function NotificationsAdmin({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
   if (!(await isAdmin())) return null; // never run queries or render data for visitors
+<<<<<<< HEAD
   const ADMIN_EMAIL = await adminEmail();
+=======
+>>>>>>> origin/main
   const smtp = await mailConfigured();
   const waKey = (process.env.CALLMEBOT_KEY || (await getSetting("wa_key"))) ?? "";
   const waPhone = (await getSetting("wa_phone")) ?? "923417427464";
@@ -139,6 +146,7 @@ export default async function NotificationsAdmin({ searchParams }: { searchParam
       <section className="rounded-2xl bg-white p-5 shadow-sm">
         <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
           <h2 className="font-bold">Notification log</h2>
+<<<<<<< HEAD
           <div className="flex items-center gap-2">
             <span className="text-xs text-slate-500">{total} total</span>
             <AdminForm action="logs_clear" hidden={{ days: 30 }} confirm="Delete log entries older than 30 days?" inline>
@@ -148,6 +156,9 @@ export default async function NotificationsAdmin({ searchParams }: { searchParam
               <button className="rounded-lg bg-red-600 px-3 py-1.5 text-xs font-bold text-white">Clear all</button>
             </AdminForm>
           </div>
+=======
+          <span className="text-xs text-slate-500">{total} total</span>
+>>>>>>> origin/main
         </div>
         {logs.length === 0 && <p className="text-sm text-slate-500">Nothing has been sent yet.</p>}
         <div className="divide-y divide-slate-100">

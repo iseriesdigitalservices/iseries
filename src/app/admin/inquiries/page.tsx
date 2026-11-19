@@ -46,9 +46,12 @@ export default async function InquiriesAdmin({ searchParams }: { searchParams: P
             <a href={`https://wa.me/${r.phone.replace(/\D/g, "")}`} target="_blank" className="mt-3 inline-flex items-center gap-1.5 rounded-lg bg-green-500 px-3 py-1.5 text-xs font-semibold text-white">
               <MessageCircle className="h-3.5 w-3.5" /> WhatsApp
             </a>
+<<<<<<< HEAD
             <AdminForm action="inquiry_delete" hidden={{ id: hex(r._id) }} confirm="Delete this inquiry permanently?" inline className="ml-2 mt-3 inline-block">
               <button className="rounded-lg bg-red-600 px-3 py-1.5 text-xs font-bold text-white">Delete</button>
             </AdminForm>
+=======
+>>>>>>> origin/main
             <AdminForm action="inquiry_status" hidden={{ id: hex(r._id) }} inline className="mt-3 flex flex-wrap gap-2">
               {["new", "contacted", "closed"].map((s) => (
                 <button key={s} name="status" value={s} className="rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-medium capitalize hover:bg-slate-100">

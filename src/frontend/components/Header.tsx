@@ -7,7 +7,11 @@ import { Gift, Menu, Phone, ShoppingCart, User, X } from "lucide-react";
 import { useCart } from "./CartProvider";
 import Logo from "./Logo";
 import ThemeToggle from "./ThemeToggle";
+<<<<<<< HEAD
 import { useSite } from "@/frontend/SiteProvider";
+=======
+import { SITE } from "@/shared/site";
+>>>>>>> origin/main
 
 const links = [
   { href: "/", label: "Home" },
@@ -23,7 +27,10 @@ export default function Header() {
   const [me, setMe] = useState<{ name: string } | null | undefined>(undefined);
   const { items, ready } = useCart();
   const path = usePathname();
+<<<<<<< HEAD
   const SITE = useSite();
+=======
+>>>>>>> origin/main
   const count = ready ? items.length : 0;
 
   useEffect(() => {

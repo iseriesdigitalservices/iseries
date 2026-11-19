@@ -52,7 +52,11 @@ export async function POST(req: Request) {
   if (changingPw) {
     const origin = await baseUrl();
     after(async () => {
+<<<<<<< HEAD
       await sendMail({ to: user.email, ...(await passwordChangedNotice(user.name, "from your account page")), kind: "customer_notice" });
+=======
+      await sendMail({ to: user.email, ...passwordChangedNotice(user.name, "from your account page"), kind: "customer_notice" });
+>>>>>>> origin/main
       await notifyAdmin({ title: `User changed password — ${user.name}`, lines: [`User: ${user.name} (${user.email})`], link: `${origin}/admin/users/${hex(user._id)}` });
     });
   }

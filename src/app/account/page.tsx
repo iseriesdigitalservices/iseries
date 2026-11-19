@@ -11,8 +11,12 @@ import { getCurrentUser } from "@/backend/auth";
 import { baseUrl } from "@/backend/mail";
 import { cols, hex } from "@/backend/mongo";
 import { referralOverview } from "@/backend/referral";
+<<<<<<< HEAD
 import { ORDER_STATUS, formatPKR, pct } from "@/shared/site";
 import { getSite } from "@/backend/config";
+=======
+import { ORDER_STATUS, REFERRAL_RATE, formatPKR } from "@/shared/site";
+>>>>>>> origin/main
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "My Account — I Series Digital Services" };
@@ -21,7 +25,10 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
   const user = await getCurrentUser();
   if (!user) redirect("/login?next=/account");
   const sp = await searchParams;
+<<<<<<< HEAD
   const REFERRAL_RATE = (await getSite()).referralRate;
+=======
+>>>>>>> origin/main
   const id = hex(user._id);
   const { orders } = await cols();
   const [myOrders, ref, origin] = await Promise.all([
@@ -31,7 +38,11 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
   ]);
   const ordPage = paginate(myOrders, sp.ord);
   const link = `${origin}/register?ref=${user.referralCode}`;
+<<<<<<< HEAD
   const pctStr = pct(REFERRAL_RATE);
+=======
+  const pct = REFERRAL_RATE * 100;
+>>>>>>> origin/main
 
   return (
     <div className="min-h-screen bg-[#f6f4ef]">
@@ -57,11 +68,19 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
         {/* REFERRAL */}
         <section className="overflow-hidden rounded-3xl bg-gradient-to-br from-black to-neutral-800 p-6 text-white shadow-xl sm:p-8">
           <p className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-[#f5c518]">
+<<<<<<< HEAD
             <Gift className="h-4 w-4" /> Refer &amp; Earn {pctStr}%
           </p>
           <h2 className="mt-2 text-2xl font-black sm:text-3xl">Bring new customers and earn {pctStr}% on every order</h2>
           <p className="mt-2 max-w-2xl text-sm text-slate-300">
             Give your link to someone new. When they sign up with it, place an order and the payment is approved, {pctStr}% of that order goes to your account.
+=======
+            <Gift className="h-4 w-4" /> Refer &amp; Earn {pct}%
+          </p>
+          <h2 className="mt-2 text-2xl font-black sm:text-3xl">Bring new customers and earn {pct}% on every order</h2>
+          <p className="mt-2 max-w-2xl text-sm text-slate-300">
+            Give your link to someone new. When they sign up with it, place an order and the payment is approved, {pct}% of that order goes to your account.
+>>>>>>> origin/main
             The admin then deposits it to you. The more new people you bring, the more profit you make.
           </p>
           <div className="mt-5">

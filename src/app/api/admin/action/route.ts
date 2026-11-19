@@ -1,5 +1,6 @@
 import { NextResponse, after } from "next/server";
 import { randomUUID } from "crypto";
+<<<<<<< HEAD
 import {
   ADMIN_COOKIE,
   checkAdminPasswordRules,
@@ -17,6 +18,12 @@ import { adminEmail, baseUrl, deleteSetting, getSetting, sendMail, setSetting, t
 import { deleteService, getAllServices, getFaqs, moveService, resetServices, saveFaqs, saveService, saveSite } from "@/backend/config";
 import { hashPassword as hashPw, verifyPassword as verifyPw } from "@/backend/auth";
 import { DOC_KEYS, type DocKey, type DocReq, type Faq, type Service } from "@/shared/site";
+=======
+import { ADMIN_COOKIE, isAdmin, revokeAdminSession } from "@/backend/admin";
+import { logActivity } from "@/backend/activity";
+import { checkPasswordStrength, hashPassword } from "@/backend/auth";
+import { ADMIN_EMAIL, baseUrl, deleteSetting, sendMail, setSetting, type MailAttachment } from "@/backend/mail";
+>>>>>>> origin/main
 import { Binary, ObjectId, cols, hex, oid, type Order, type UserStatus } from "@/backend/mongo";
 import { notifyAdmin, sendWhatsApp } from "@/backend/notify";
 import { balanceFor, syncCommission } from "@/backend/referral";
@@ -46,9 +53,13 @@ export async function POST(req: Request) {
     return res;
   }
 
+<<<<<<< HEAD
   const me = await currentAdmin();
   if (!me) return bad("Your session has ended. Please log in again.", 401);
   const meId = hex(me._id);
+=======
+  if (!(await isAdmin())) return bad("Your session has ended. Please log in again.", 401);
+>>>>>>> origin/main
   const rl = rateLimit(`admin-action:${clientIp(req)}`, 240, 60_000);
   if (!rl.ok) return bad("Too many requests. Slow down.", 429);
 
@@ -81,10 +92,17 @@ export async function POST(req: Request) {
     const { created, referrer } = await syncCommission(o);
     if (!created || !referrer) return [];
     const { balance } = await balanceFor(hex(referrer._id));
+<<<<<<< HEAD
     later(async () =>
       sendMail({
         to: referrer.email,
         ...(await commissionEarned(referrer.name, created.amount, created.referredName, created.orderNo, balance, `${origin}/account`)),
+=======
+    later(() =>
+      sendMail({
+        to: referrer.email,
+        ...commissionEarned(referrer.name, created.amount, created.referredName, created.orderNo, balance, `${origin}/account`),
+>>>>>>> origin/main
         kind: "customer_notice",
         orderId: hex(o._id),
       }),
@@ -101,7 +119,11 @@ export async function POST(req: Request) {
       await c.orders.updateOne({ _id: o._id }, { $set: { status: "processing", adminNote: note, updatedAt: new Date() } });
       await c.orderEvents.insertOne({ _id: new ObjectId(), orderId: hex(o._id), status: "processing", title: "Payment approved — your order is now in process", note, createdAt: new Date() });
       const fresh: Order = { ...o, status: "processing", adminNote: note };
+<<<<<<< HEAD
       if (o.email) later(async () => sendMail({ to: o.email!, ...(await processingCustomer(fresh, trackUrl(o))), kind: "customer_notice", orderId: hex(o._id) }));
+=======
+      if (o.email) later(() => sendMail({ to: o.email!, ...processingCustomer(fresh, trackUrl(o)), kind: "customer_notice", orderId: hex(o._id) }));
+>>>>>>> origin/main
       const refLines = await referral(fresh);
       audit(o, "Order moved to IN PROCESS", [...(note ? [`Note: ${note}`] : []), ...refLines]);
       return ok(`Order is now "In process".${refLines.length ? " Referral commission credited." : ""}`);
@@ -114,7 +136,11 @@ export async function POST(req: Request) {
       await c.orders.updateOne({ _id: o._id }, { $set: { status: "rejected", adminNote: note, updatedAt: new Date() } });
       await c.orderEvents.insertOne({ _id: new ObjectId(), orderId: hex(o._id), status: "rejected", title: "Payment could not be verified", note, createdAt: new Date() });
       const fresh: Order = { ...o, status: "rejected", adminNote: note };
+<<<<<<< HEAD
       if (o.email) later(async () => sendMail({ to: o.email!, ...(await statusCustomer(fresh, "rejected", trackUrl(o))), kind: "customer_notice", orderId: hex(o._id) }));
+=======
+      if (o.email) later(() => sendMail({ to: o.email!, ...statusCustomer(fresh, "rejected", trackUrl(o)), kind: "customer_notice", orderId: hex(o._id) }));
+>>>>>>> origin/main
       await syncCommission(fresh);
       audit(o, "Payment REJECTED", [`Reason: ${note}`]);
       return ok("Payment rejected. The customer can upload a new slip.");
@@ -126,7 +152,11 @@ export async function POST(req: Request) {
       if (!note) return bad("Please write the update message.");
       await c.orderEvents.insertOne({ _id: new ObjectId(), orderId: hex(o._id), status: o.status, title: "Progress update", note, createdAt: new Date() });
       await c.orders.updateOne({ _id: o._id }, { $set: { updatedAt: new Date() } });
+<<<<<<< HEAD
       if (fd.get("emailCustomer") === "on" && o.email) later(async () => sendMail({ to: o.email!, ...(await updateCustomer(o, note, trackUrl(o))), kind: "customer_notice", orderId: hex(o._id) }));
+=======
+      if (fd.get("emailCustomer") === "on" && o.email) later(() => sendMail({ to: o.email!, ...updateCustomer(o, note, trackUrl(o)), kind: "customer_notice", orderId: hex(o._id) }));
+>>>>>>> origin/main
       audit(o, "Progress update added", [`Update: ${note}`]);
       return ok("Update added to the customer's order page.");
     }
@@ -150,7 +180,11 @@ export async function POST(req: Request) {
       await c.orders.updateOne({ _id: o._id }, { $set: set });
       await c.orderEvents.insertOne({ _id: new ObjectId(), orderId: hex(o._id), status: "completed", title: "Process done — your service is complete", note: deliveryNote, createdAt: new Date() });
       const fresh: Order = { ...o, ...set } as Order;
+<<<<<<< HEAD
       if (o.email) later(async () => sendMail({ to: o.email!, ...(await statusCustomer(fresh, "completed", trackUrl(o))), attachments, kind: "customer_notice", orderId: hex(o._id) }));
+=======
+      if (o.email) later(() => sendMail({ to: o.email!, ...statusCustomer(fresh, "completed", trackUrl(o)), attachments, kind: "customer_notice", orderId: hex(o._id) }));
+>>>>>>> origin/main
       const refLines = await referral(fresh);
       audit(o, "Order COMPLETED", [`Delivery: ${deliveryNote}`, ...refLines]);
       return ok("Order marked as completed. The customer now sees \"Process done\".");
@@ -164,7 +198,11 @@ export async function POST(req: Request) {
       if (!STATUSES.includes(status)) return bad("Invalid status.");
       await c.users.updateOne({ _id: u._id }, { $set: { status } });
       await logActivity(hex(u._id), "admin_status", `${u.status ?? "active"} → ${status}`, req);
+<<<<<<< HEAD
       later(async () => notifyAdmin({ title: `User status changed — ${u.name}`, lines: [`User: ${u.name} (${u.email})`, `New status: ${status.toUpperCase()}`], link: `${origin}/admin/users/${hex(u._id)}` }));
+=======
+      later(() => notifyAdmin({ title: `User status changed — ${u.name}`, lines: [`User: ${u.name} (${u.email})`, `New status: ${status.toUpperCase()}`], link: `${origin}/admin/users/${hex(u._id)}` }));
+>>>>>>> origin/main
       return ok(`${u.name} is now ${status.toUpperCase()}.${status !== "active" ? " They are logged out and cannot log in." : ""}`);
     }
     case "user_delete": {
@@ -174,7 +212,11 @@ export async function POST(req: Request) {
       await c.users.deleteOne({ _id: u._id });
       await c.activity.deleteMany({ userId: id });
       await c.passwordResets.deleteMany({ userId: id });
+<<<<<<< HEAD
       later(async () => notifyAdmin({ title: `User DELETED — ${u.name}`, lines: [`User: ${u.name} (${u.email})`, "Their orders were kept in the order list."] }));
+=======
+      later(() => notifyAdmin({ title: `User DELETED — ${u.name}`, lines: [`User: ${u.name} (${u.email})`, "Their orders were kept in the order list."] }));
+>>>>>>> origin/main
       return ok(`${u.name} was deleted.`);
     }
     case "user_reveal": {
@@ -198,8 +240,13 @@ export async function POST(req: Request) {
       if (weak) return bad(weak);
       await c.users.updateOne({ _id: u._id }, { $set: { passwordHash: hashPassword(pw), vault: await nextVault(u, pw, "set by admin") }, $inc: { sv: 1 } });
       await logActivity(hex(u._id), "admin_password_set", null, req);
+<<<<<<< HEAD
       later(async () => sendMail({ to: u.email, ...(await passwordChangedNotice(u.name, "set by our support team")), kind: "customer_notice" }));
       later(async () => notifyAdmin({ title: `Admin set a new password — ${u.name}`, lines: [`User: ${u.name} (${u.email})`], link: `${origin}/admin/users/${hex(u._id)}` }));
+=======
+      later(() => sendMail({ to: u.email, ...passwordChangedNotice(u.name, "set by our support team"), kind: "customer_notice" }));
+      later(() => notifyAdmin({ title: `Admin set a new password — ${u.name}`, lines: [`User: ${u.name} (${u.email})`], link: `${origin}/admin/users/${hex(u._id)}` }));
+>>>>>>> origin/main
       return ok("New password saved. The user was logged out everywhere.", { reset: true });
     }
     case "reg_approval": {
@@ -219,8 +266,13 @@ export async function POST(req: Request) {
       if (amount > balance) return bad(`Amount is more than the balance. Available: ${formatPKR(balance)}`);
       await c.payouts.insertOne({ _id: new ObjectId(), userId: hex(user._id), amount, note, createdAt: new Date() });
       const left = balance - amount;
+<<<<<<< HEAD
       later(async () => sendMail({ to: user.email, ...(await payoutSent(user.name, amount, note, left, `${origin}/account`)), kind: "customer_notice" }));
       later(async () =>
+=======
+      later(() => sendMail({ to: user.email, ...payoutSent(user.name, amount, note, left, `${origin}/account`), kind: "customer_notice" }));
+      later(() =>
+>>>>>>> origin/main
         notifyAdmin({
           title: `Referral payout recorded — ${user.name} (${formatPKR(amount)})`,
           lines: [`User: ${user.name} (${user.referralCode})`, `Paid: ${formatPKR(amount)}`, `Remaining balance: ${formatPKR(left)}`, ...(note ? [`Note: ${note}`] : [])],
@@ -240,6 +292,7 @@ export async function POST(req: Request) {
       const file = fd.get("file");
       if (file instanceof File && file.size > 0 && file.size <= 10 * 1024 * 1024)
         attachments.push({ filename: file.name, content: Buffer.from(await file.arrayBuffer()), contentType: file.type || undefined });
+<<<<<<< HEAD
       const r = await sendMail({ to, ...(await manualMessage(subject, body)), replyTo: await adminEmail(), attachments, kind: "manual", orderId: str(fd, "orderId", 30) || null });
       return r.ok ? ok("Email sent ✓") : bad(`Email could not be sent: ${r.error}`);
     }
@@ -248,12 +301,25 @@ export async function POST(req: Request) {
       const admin = await adminEmail();
       const r = await sendMail({ to: admin, ...m, kind: "test" });
       return r.ok ? ok(`Test email sent to ${admin} ✓ (check inbox / spam)`) : bad(`Test failed: ${r.error}`);
+=======
+      const r = await sendMail({ to, ...manualMessage(subject, body), replyTo: ADMIN_EMAIL, attachments, kind: "manual", orderId: str(fd, "orderId", 30) || null });
+      return r.ok ? ok("Email sent ✓") : bad(`Email could not be sent: ${r.error}`);
+    }
+    case "test_mail": {
+      const m = manualMessage("Test email", "This is a test email. If you can read this, notifications are working ✅");
+      const r = await sendMail({ to: ADMIN_EMAIL, ...m, kind: "test" });
+      return r.ok ? ok(`Test email sent to ${ADMIN_EMAIL} ✓ (check inbox / spam)`) : bad(`Test failed: ${r.error}`);
+>>>>>>> origin/main
     }
     case "smtp_save": {
       const pass = str(fd, "pass", 100).replace(/\s+/g, "");
       if (pass.length < 8) return bad("Enter the App Password correctly (16 letters).");
       await setSetting("smtp_pass", pass);
+<<<<<<< HEAD
       const r = await sendMail({ to: await adminEmail(), ...(await manualMessage("Email connected ✅", "Your Gmail App Password was saved. All notifications and customer emails now go out from this Gmail.")), kind: "test" });
+=======
+      const r = await sendMail({ to: ADMIN_EMAIL, ...manualMessage("Email connected ✅", "Your Gmail App Password was saved. All notifications and customer emails now go out from this Gmail."), kind: "test" });
+>>>>>>> origin/main
       if (!r.ok) {
         await deleteSetting("smtp_pass");
         return bad("Gmail did not accept the password. Turn on 2-Step Verification and create a new App Password.");
@@ -283,6 +349,7 @@ export async function POST(req: Request) {
       await deleteSetting("wa_phone");
       return ok("WhatsApp notifications turned off.");
 
+<<<<<<< HEAD
 
     // ================= DELETE DATA =================
     case "order_delete": {
@@ -781,6 +848,8 @@ export async function POST(req: Request) {
       return ok("Admin password changed ✓ You will be asked to log in again.", { logout: true });
     }
 
+=======
+>>>>>>> origin/main
     // ================= INQUIRIES =================
     case "inquiry_status": {
       const status = str(fd, "status", 20);

@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
+<<<<<<< HEAD
 import { getPublicConfig, getSite } from "@/backend/config";
 import { SiteProvider } from "@/frontend/SiteProvider";
+=======
+>>>>>>> origin/main
 import { CartProvider } from "@/frontend/components/CartProvider";
 import CartBar from "@/frontend/components/CartBar";
 
 export const viewport = { width: "device-width", initialScale: 1 };
 
+<<<<<<< HEAD
 /** Title / description follow whatever the admin saved in Website Settings. */
 export async function generateMetadata(): Promise<Metadata> {
   const site = await getSite();
@@ -26,6 +30,17 @@ const themeInit = `(function(){try{var t=localStorage.getItem("theme");var d=t?t
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
   const config = await getPublicConfig();
+=======
+export const metadata: Metadata = {
+  title: "I Series Digital Services — Passport, CNIC, ECL, NADRA & Document Services",
+  description:
+    "Professional digital document services for Pakistanis worldwide: passport, CNIC unblock, ECL removal, FIR, CRO, degree attestation, LAT/GAT, NADRA & FRC.",
+};
+
+const themeInit = `(function(){try{var t=localStorage.getItem("theme");var d=t?t==="dark":window.matchMedia("(prefers-color-scheme: dark)").matches;if(d)document.documentElement.classList.add("dark");}catch(e){}})();`;
+
+export default function RootLayout({ children }: { children: ReactNode }) {
+>>>>>>> origin/main
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <head>
@@ -38,12 +53,19 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         />
       </head>
       <body className="bg-white text-slate-900 antialiased">
+<<<<<<< HEAD
         <SiteProvider config={config}>
           <CartProvider>
             {children}
             <CartBar />
           </CartProvider>
         </SiteProvider>
+=======
+        <CartProvider>
+          {children}
+          <CartBar />
+        </CartProvider>
+>>>>>>> origin/main
       </body>
     </html>
   );

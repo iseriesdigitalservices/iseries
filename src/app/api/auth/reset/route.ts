@@ -55,7 +55,11 @@ export async function POST(req: Request) {
       lines: [`User: ${user.name} (${user.email})`, `IP: ${clientIp(req)}`, "Open the user page to see the previous and current password."],
       link: `${origin}/admin/users/${uid}`,
     });
+<<<<<<< HEAD
     await sendMail({ to: user.email, ...(await passwordChangedNotice(user.name, "password reset with email code")), kind: "customer_notice" });
+=======
+    await sendMail({ to: user.email, ...passwordChangedNotice(user.name, "password reset with email code"), kind: "customer_notice" });
+>>>>>>> origin/main
   });
   return NextResponse.json({ ok: true });
 }

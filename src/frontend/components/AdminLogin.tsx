@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+<<<<<<< HEAD
 import { ExternalLink, Eye, EyeOff, KeyRound, Loader2, Lock, ShieldCheck } from "lucide-react";
 import { LogoMark } from "./Logo";
 import ThemeToggle from "./ThemeToggle";
@@ -26,6 +27,13 @@ function Password({ name, placeholder, autoComplete }: { name: string; placehold
 }
 
 export default function AdminLogin({ setup = false }: { setup?: boolean }) {
+=======
+import { ExternalLink, Loader2, Lock } from "lucide-react";
+import { LogoMark } from "./Logo";
+import ThemeToggle from "./ThemeToggle";
+
+export default function AdminLogin() {
+>>>>>>> origin/main
   const [error, setError] = useState("");
   const [blocked, setBlocked] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -35,12 +43,20 @@ export default function AdminLogin({ setup = false }: { setup?: boolean }) {
     setError("");
     setBlocked(false);
     setLoading(true);
+<<<<<<< HEAD
     const data = Object.fromEntries(new FormData(e.currentTarget).entries());
+=======
+    const password = String(new FormData(e.currentTarget).get("password") || "");
+>>>>>>> origin/main
     try {
       const res = await fetch("/api/admin/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+<<<<<<< HEAD
         body: JSON.stringify({ ...data, mode: setup ? "setup" : "login" }),
+=======
+        body: JSON.stringify({ password }),
+>>>>>>> origin/main
         credentials: "same-origin",
       });
       const json = await res.json().catch(() => ({}));
@@ -67,6 +83,7 @@ export default function AdminLogin({ setup = false }: { setup?: boolean }) {
       <div className="absolute right-4 top-4">
         <ThemeToggle className="!bg-white/10 !text-[#f5c518]" />
       </div>
+<<<<<<< HEAD
       <form onSubmit={onSubmit} className="w-full max-w-md space-y-4 rounded-3xl bg-white p-6 shadow-2xl sm:p-8">
         <LogoMark className="mx-auto h-16 w-auto" />
 
@@ -117,6 +134,23 @@ export default function AdminLogin({ setup = false }: { setup?: boolean }) {
             {error}
           </p>
         )}
+=======
+      <form onSubmit={onSubmit} className="w-full max-w-sm space-y-5 rounded-3xl bg-white p-6 shadow-2xl sm:p-8">
+        <LogoMark className="mx-auto h-20 w-auto" />
+        <h1 className="flex items-center justify-center gap-2 text-center text-xl font-extrabold">
+          <Lock className="h-5 w-5" /> Admin Login
+        </h1>
+        <input
+          type="password"
+          name="password"
+          required
+          autoFocus
+          autoComplete="current-password"
+          placeholder="Admin password"
+          className="w-full rounded-xl border border-slate-300 px-4 py-3 text-base outline-none focus:border-black dark:focus:border-[#f5c518]"
+        />
+        {error && <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700" role="alert">{error}</p>}
+>>>>>>> origin/main
         {blocked && (
           <div className="space-y-2 rounded-lg bg-amber-50 px-3 py-3 text-sm text-amber-900">
             <p>Your browser is blocking cookies inside this preview frame. Open the admin panel in a <b>new tab</b>:</p>
@@ -125,6 +159,7 @@ export default function AdminLogin({ setup = false }: { setup?: boolean }) {
             </a>
           </div>
         )}
+<<<<<<< HEAD
 
         <button disabled={loading} className="flex w-full items-center justify-center gap-2 rounded-xl bg-black py-3 font-semibold text-[#f5c518] hover:bg-neutral-800 disabled:opacity-70">
           {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <KeyRound className="h-4 w-4" />}
@@ -134,6 +169,12 @@ export default function AdminLogin({ setup = false }: { setup?: boolean }) {
         <p className="text-center text-xs text-slate-500">
           For your security the session ends when you leave the admin panel, and after 60 minutes of inactivity.
         </p>
+=======
+        <button disabled={loading} className="flex w-full items-center justify-center gap-2 rounded-xl bg-black py-3 font-semibold text-[#f5c518] hover:bg-neutral-800 disabled:opacity-70">
+          {loading && <Loader2 className="h-4 w-4 animate-spin" />} Log in
+        </button>
+        <p className="text-center text-xs text-slate-500">For your security the admin session ends automatically when you leave the admin panel.</p>
+>>>>>>> origin/main
       </form>
     </main>
   );

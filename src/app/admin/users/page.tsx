@@ -5,15 +5,22 @@ import { cols, hex, type UserStatus } from "@/backend/mongo";
 import AdminForm from "@/frontend/components/AdminForm";
 import Pager, { paginate } from "@/frontend/components/Pager";
 import { getSetting } from "@/backend/mail";
+<<<<<<< HEAD
 import { formatPKR, pct } from "@/shared/site";
 import { getSite } from "@/backend/config";
+=======
+import { REFERRAL_RATE, formatPKR } from "@/shared/site";
+>>>>>>> origin/main
 import { STATUS_ORDER, USER_STATUS } from "@/frontend/userStatus";
 
 export const dynamic = "force-dynamic";
 
 export default async function UsersAdmin({ searchParams }: { searchParams: Promise<{ q?: string; status?: string; page?: string }> }) {
   if (!(await isAdmin())) return null; // never run queries or render data for visitors
+<<<<<<< HEAD
   const REFERRAL_RATE = (await getSite()).referralRate;
+=======
+>>>>>>> origin/main
   const { q = "", status = "all", page: pageParam } = await searchParams;
   const { users, orders, commissions, payouts } = await cols();
   const [allUsers, allOrders, allComms, allPays, approval] = await Promise.all([
@@ -37,7 +44,11 @@ export default async function UsersAdmin({ searchParams }: { searchParams: Promi
   return (
     <div>
       <h1 className="text-2xl font-black">Users</h1>
+<<<<<<< HEAD
       <p className="mt-1 text-sm text-slate-600">Manage every customer account: status, password, activity and referral payouts. Referral commission is {pct(REFERRAL_RATE)}% of each approved order.</p>
+=======
+      <p className="mt-1 text-sm text-slate-600">Manage every customer account: status, password, activity and referral payouts. Referral commission is {REFERRAL_RATE * 100}% of each approved order.</p>
+>>>>>>> origin/main
 
       <div className="mt-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
         {[

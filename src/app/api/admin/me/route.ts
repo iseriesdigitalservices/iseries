@@ -1,10 +1,15 @@
 import { NextResponse } from "next/server";
+<<<<<<< HEAD
 import { currentAdmin, needsSetup } from "@/backend/adminAuth";
 import { hex } from "@/backend/mongo";
+=======
+import { isAdmin } from "@/backend/admin";
+>>>>>>> origin/main
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
+<<<<<<< HEAD
   const admin = await currentAdmin();
   return NextResponse.json(
     {
@@ -14,4 +19,7 @@ export async function GET() {
     },
     { headers: { "Cache-Control": "no-store" } },
   );
+=======
+  return NextResponse.json({ ok: await isAdmin() });
+>>>>>>> origin/main
 }

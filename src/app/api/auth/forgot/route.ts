@@ -37,7 +37,11 @@ export async function POST(req: Request) {
       createdAt: new Date(),
     });
     await logActivity(hex(user._id), "password_reset_requested", null, req);
+<<<<<<< HEAD
     await sendMail({ to: user.email, ...(await otpEmail(user.name, code)), kind: "customer_notice" });
+=======
+    await sendMail({ to: user.email, ...otpEmail(user.name, code), kind: "customer_notice" });
+>>>>>>> origin/main
   }
   return NextResponse.json({ ok: true, message: "If this email is registered, a 6-digit code has been sent to it." });
 }

@@ -1,6 +1,10 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
+<<<<<<< HEAD
 import { currentAdmin, needsSetup } from "@/backend/adminAuth";
+=======
+import { isAdmin } from "@/backend/admin";
+>>>>>>> origin/main
 import AdminLogin from "@/frontend/components/AdminLogin";
 import AdminForm from "@/frontend/components/AdminForm";
 import ThemeToggle from "@/frontend/components/ThemeToggle";
@@ -13,16 +17,24 @@ const nav = [
   { href: "/admin", label: "Orders" },
   { href: "/admin/users", label: "Users" },
   { href: "/admin/inquiries", label: "Inquiries" },
+<<<<<<< HEAD
   { href: "/admin/services", label: "Services" },
   { href: "/admin/payments", label: "Payment Accounts" },
   { href: "/admin/settings", label: "Website Settings" },
   { href: "/admin/security", label: "Security" },
+=======
+  { href: "/admin/payments", label: "Payment Accounts" },
+>>>>>>> origin/main
   { href: "/admin/emails", label: "Notifications" },
 ];
 
 export default async function AdminLayout({ children }: { children: ReactNode }) {
+<<<<<<< HEAD
   const admin = await currentAdmin();
   if (!admin) return <AdminLogin setup={await needsSetup()} />;
+=======
+  if (!(await isAdmin())) return <AdminLogin />;
+>>>>>>> origin/main
 
   return (
     <div className="min-h-[100dvh] bg-slate-100">
@@ -33,7 +45,10 @@ export default async function AdminLayout({ children }: { children: ReactNode })
             <span className="rounded bg-[#f5c518] px-2 py-0.5 text-[10px] font-black uppercase tracking-widest text-black">Admin</span>
           </Link>
           <div className="flex items-center gap-2 text-sm">
+<<<<<<< HEAD
             <span className="hidden text-xs text-slate-300 sm:inline">{admin.name}</span>
+=======
+>>>>>>> origin/main
             <ThemeToggle className="!h-9 !w-9 !bg-white/10 !text-[#f5c518] hover:!bg-white/20" />
             <Link href="/" title="Opening the website ends your admin session" className="rounded-lg bg-white/10 px-3 py-2 hover:bg-white/20">
               Website

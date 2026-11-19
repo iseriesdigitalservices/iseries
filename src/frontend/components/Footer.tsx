@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use client";
 
 import Link from "next/link";
@@ -8,6 +9,14 @@ import { useServices, useSite } from "@/frontend/SiteProvider";
 export default function Footer() {
   const SITE = useSite();
   const SERVICES = useServices();
+=======
+import Link from "next/link";
+import { Mail, MessageCircle, Phone } from "lucide-react";
+import { LogoMark } from "./Logo";
+import { SERVICES, SITE } from "@/shared/site";
+
+export default function Footer() {
+>>>>>>> origin/main
   return (
     <>
       <footer className="bg-[#0a0a0a] text-slate-400">
@@ -22,7 +31,11 @@ export default function Footer() {
           <div>
             <h3 className="font-bold text-white">Services</h3>
             <ul className="mt-4 space-y-2 text-sm">
+<<<<<<< HEAD
               {SERVICES.slice(0, 8).map((s) => (
+=======
+              {SERVICES.map((s) => (
+>>>>>>> origin/main
                 <li key={s.slug}>
                   <Link href={`/services/${s.slug}`} className="hover:text-gold">
                     {s.title}
@@ -76,7 +89,12 @@ export default function Footer() {
         </div>
         <div className="border-t border-white/10">
           <p className="mx-auto max-w-7xl px-4 py-6 text-center text-xs leading-relaxed sm:px-6">
+<<<<<<< HEAD
             {SITE.disclaimer} © {new Date().getFullYear()} {SITE.name}. All rights reserved.
+=======
+            Disclaimer: {SITE.name} is a private document facilitation and guidance service and is not a government body.
+            Final decisions rest with the relevant government departments. © {new Date().getFullYear()} {SITE.name}. All rights reserved.
+>>>>>>> origin/main
           </p>
         </div>
       </footer>

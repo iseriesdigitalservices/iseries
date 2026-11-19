@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use client";
 
 import { ChevronDown } from "lucide-react";
@@ -8,6 +9,15 @@ export default function FaqList() {
   return (
     <div className="space-y-3">
       {faqs.map((f) => (
+=======
+import { ChevronDown } from "lucide-react";
+import { FAQS } from "@/shared/site";
+
+export default function FaqList() {
+  return (
+    <div className="space-y-3">
+      {FAQS.map((f) => (
+>>>>>>> origin/main
         <details key={f.q} className="group rounded-2xl border border-black/10 bg-white p-5 open:shadow-md">
           <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-black">
             {f.q}

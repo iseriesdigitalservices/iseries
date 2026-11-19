@@ -3,6 +3,7 @@ import Header from "@/frontend/components/Header";
 import Footer from "@/frontend/components/Footer";
 import PageBanner from "@/frontend/components/PageBanner";
 import ContactForm from "@/frontend/components/ContactForm";
+<<<<<<< HEAD
 import { getSite } from "@/backend/config";
 
 export const metadata = { title: "Contact Us — I Series Digital Services" };
@@ -11,6 +12,13 @@ export const dynamic = "force-dynamic";
 
 export default async function ContactPage() {
   const SITE = await getSite();
+=======
+import { SITE } from "@/shared/site";
+
+export const metadata = { title: "Contact Us — I Series Digital Services" };
+
+export default function ContactPage() {
+>>>>>>> origin/main
   return (
     <div>
       <Header />

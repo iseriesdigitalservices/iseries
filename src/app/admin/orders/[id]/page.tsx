@@ -5,8 +5,12 @@ import { Download, MessageCircle, Phone } from "lucide-react";
 import { cols, hex, oid } from "@/backend/mongo";
 import AdminForm from "@/frontend/components/AdminForm";
 import Pager, { paginate } from "@/frontend/components/Pager";
+<<<<<<< HEAD
 import { ORDER_STATUS, formatPKR, pct } from "@/shared/site";
 import { getSite } from "@/backend/config";
+=======
+import { ORDER_STATUS, REFERRAL_RATE, formatPKR } from "@/shared/site";
+>>>>>>> origin/main
 
 export const dynamic = "force-dynamic";
 
@@ -24,7 +28,10 @@ function Row({ k, v }: { k: string; v?: string | null }) {
 
 export default async function OrderDetail({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ tl?: string; ml?: string }> }) {
   if (!(await isAdmin())) return null; // never run queries or render data for visitors
+<<<<<<< HEAD
   const REFERRAL_RATE = (await getSite()).referralRate;
+=======
+>>>>>>> origin/main
   const { id } = await params;
   const sp = await searchParams;
   const _id = oid(id);
@@ -89,7 +96,11 @@ export default async function OrderDetail({ params, searchParams }: { params: Pr
               <p className="mb-3 text-xs text-slate-500">Check the slip and the amount ({formatPKR(o.total)}).</p>
               {referrer && (
                 <p className="mb-3 rounded-lg bg-amber-50 p-2 text-xs text-amber-900">
+<<<<<<< HEAD
                   Approving will credit <b>{referrer.name}</b> with a <b>{formatPKR(Math.round(o.total * REFERRAL_RATE))}</b> ({pct(REFERRAL_RATE)}%) referral commission.
+=======
+                  Approving will credit <b>{referrer.name}</b> with a <b>{formatPKR(Math.round(o.total * REFERRAL_RATE))}</b> ({REFERRAL_RATE * 100}%) referral commission.
+>>>>>>> origin/main
                 </p>
               )}
               <AdminForm action="order_processing" hidden={{ id: oidHex }}>
@@ -178,7 +189,11 @@ export default async function OrderDetail({ params, searchParams }: { params: Pr
             <section className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-[#f5c518]">
               <h2 className="mb-2 font-bold">🎁 Referral</h2>
               <Row k="Referred by" v={`${referrer.name} (${referrer.referralCode})`} />
+<<<<<<< HEAD
               <Row k="Commission" v={`${formatPKR(Math.round(o.total * REFERRAL_RATE))} (${pct(REFERRAL_RATE)}%)`} />
+=======
+              <Row k="Commission" v={`${formatPKR(Math.round(o.total * REFERRAL_RATE))} (${REFERRAL_RATE * 100}%)`} />
+>>>>>>> origin/main
               <p className="mt-1 text-sm">
                 Status:{" "}
                 <b className={commission?.status === "earned" ? "text-green-700" : "text-amber-700"}>
@@ -189,6 +204,7 @@ export default async function OrderDetail({ params, searchParams }: { params: Pr
             </section>
           )}
 
+<<<<<<< HEAD
           <section className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-red-200">
             <h2 className="font-bold text-red-700">Danger zone</h2>
             <p className="mb-3 text-xs text-slate-500">
@@ -204,6 +220,8 @@ export default async function OrderDetail({ params, searchParams }: { params: Pr
             </AdminForm>
           </section>
 
+=======
+>>>>>>> origin/main
           <section className="rounded-2xl bg-white p-5 shadow-sm">
             <h2 className="mb-2 font-bold">Services &amp; payment</h2>
             <ul className="divide-y divide-slate-100 text-sm">

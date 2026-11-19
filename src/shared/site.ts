@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /**
  * Shared types + DEFAULT content.
  *
@@ -33,6 +34,9 @@ export type SiteConfig = {
 };
 
 export const DEFAULT_SITE: SiteConfig = {
+=======
+export const SITE = {
+>>>>>>> origin/main
   name: "I Series Digital Services",
   short: "iSeries",
   tagline: "Your Documents | Your Rights | Our Priority",
@@ -42,6 +46,7 @@ export const DEFAULT_SITE: SiteConfig = {
     { display: "0324 0912349", intl: "923240912349" },
   ],
   email: "iseriesdigitalservices@gmail.com",
+<<<<<<< HEAD
   address: "",
   referralRate: 0.1,
   heroTitle: "Unblocking",
@@ -68,6 +73,16 @@ export const DOC_KEYS: { key: DocKey; label: string }[] = [
   { key: "resultCard", label: "Result card / roll number slip" },
 ];
 
+=======
+};
+
+// Referral: the referrer earns this share of every paid order placed by a person they brought in.
+export const REFERRAL_RATE = 0.1;
+
+export type DocKey = "cnicFront" | "cnicBack" | "passportCopy" | "degreeCopy" | "firCopy" | "resultCard";
+export type DocReq = { key: DocKey; label: string; required: boolean };
+
+>>>>>>> origin/main
 export type Service = {
   slug: string;
   title: string;
@@ -77,6 +92,7 @@ export type Service = {
   icon: string;
   price: number | null; // PKR; null = quote based
   docs: DocReq[];
+<<<<<<< HEAD
   /** Hidden services stay reachable by link but are not listed or orderable */
   active?: boolean;
   order?: number;
@@ -99,13 +115,21 @@ export const ICON_NAMES = [
   "Users",
 ] as const;
 
+=======
+};
+
+>>>>>>> origin/main
 const CNIC: DocReq[] = [
   { key: "cnicFront", label: "CNIC — Front", required: true },
   { key: "cnicBack", label: "CNIC — Back", required: true },
 ];
 const PASSPORT_REQ: DocReq = { key: "passportCopy", label: "Passport — Data page", required: true };
 
+<<<<<<< HEAD
 export const DEFAULT_SERVICES: Service[] = [
+=======
+export const SERVICES: Service[] = [
+>>>>>>> origin/main
   {
     slug: "status-check",
     title: "Passport / ECL / PCL / Block Check",
@@ -218,7 +242,26 @@ export const DEFAULT_SERVICES: Service[] = [
   },
 ];
 
+<<<<<<< HEAD
 export const DEFAULT_FAQS: Faq[] = [
+=======
+/** Documents the customer must / may upload for a set of services (passport only where relevant). */
+export function docsFor(slugs: string[]): DocReq[] {
+  const map = new Map<DocKey, DocReq>();
+  for (const slug of slugs) {
+    const svc = SERVICES.find((s) => s.slug === slug);
+    if (!svc) continue;
+    for (const d of svc.docs) {
+      const ex = map.get(d.key);
+      if (!ex) map.set(d.key, { ...d });
+      else if (d.required && !ex.required) map.set(d.key, { ...d });
+    }
+  }
+  return [...map.values()];
+}
+
+export const FAQS = [
+>>>>>>> origin/main
   {
     q: "Can I use your services while living outside Pakistan?",
     a: "Yes, absolutely. Our team helps overseas Pakistanis all over the world. You can reach us on WhatsApp or through the online form and order from anywhere.",
@@ -257,17 +300,23 @@ export const DEFAULT_FAQS: Faq[] = [
   },
 ];
 
+<<<<<<< HEAD
 /* ------------------------------------------------------------------ helpers */
 
 /** Referral rate as a clean percentage, e.g. 0.15 -> "15" (never 15.000000000000002). */
 export function pct(rate: number) {
   return String(Math.round(rate * 1000) / 10);
 }
+=======
+// Prices in PKR. `null` = price depends on the work (quote based).
+export const PRICES: Record<string, number | null> = Object.fromEntries(SERVICES.map((s) => [s.slug, s.price]));
+>>>>>>> origin/main
 
 export function formatPKR(n: number) {
   return "Rs " + n.toLocaleString("en-PK");
 }
 
+<<<<<<< HEAD
 /** Documents needed for a set of services (a required one always wins). */
 export function docsFor(services: Service[], slugs: string[]): DocReq[] {
   const map = new Map<DocKey, DocReq>();
@@ -289,6 +338,10 @@ export function findService(services: Service[], slug: string) {
 
 export function priceMap(services: Service[]): Record<string, number | null> {
   return Object.fromEntries(services.map((s) => [s.slug, s.price]));
+=======
+export function getService(slug: string) {
+  return SERVICES.find((s) => s.slug === slug);
+>>>>>>> origin/main
 }
 
 export const ORDER_STATUS: Record<string, { label: string; short: string; cls: string }> = {
@@ -298,6 +351,7 @@ export const ORDER_STATUS: Record<string, { label: string; short: string; cls: s
   completed: { label: "Process done — service delivered", short: "Completed", cls: "bg-green-100 text-green-800" },
   rejected: { label: "Payment rejected", short: "Rejected", cls: "bg-red-100 text-red-800" },
 };
+<<<<<<< HEAD
 
 /** Logo URLs — uploaded logos come from the database, otherwise the files in /public. */
 export function logoSrc(site: Pick<SiteConfig, "logoVersion" | "hasLogoLight" | "hasLogoDark">, dark: boolean) {
@@ -305,3 +359,5 @@ export function logoSrc(site: Pick<SiteConfig, "logoVersion" | "hasLogoLight" | 
   if (dark) return site.hasLogoDark && v ? `/api/branding/dark?v=${v}` : "/logo-white.png";
   return site.hasLogoLight && v ? `/api/branding/light?v=${v}` : "/logo.png";
 }
+=======
+>>>>>>> origin/main

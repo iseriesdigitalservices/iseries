@@ -85,8 +85,11 @@ export type EmailLog = {
 };
 
 export type Setting = { _id: string; value: string; updatedAt: Date };
+<<<<<<< HEAD
 export type SiteConfigDoc = { _id: string; value: Record<string, unknown>; updatedAt: Date };
 export type ServiceDoc = { _id: string; slug: string; title: string; order: number; active: boolean } & Record<string, unknown>;
+=======
+>>>>>>> origin/main
 
 export type UserStatus = "active" | "pending" | "hold" | "inactive";
 export type VaultEntry = { enc: string; at: Date; how: string };
@@ -123,6 +126,7 @@ export type Activity = {
 };
 
 export type PasswordReset = { _id: ObjectId; userId: string; codeHash: string; expiresAt: Date; attempts: number; createdAt: Date };
+<<<<<<< HEAD
 export type AdminSession = { _id: string; adminId: string; createdAt: Date; expireAt: Date; ip: string | null; ua: string | null };
 
 export type AdminUser = {
@@ -147,6 +151,9 @@ export type AdminActivity = {
   ua: string | null;
   at: Date;
 };
+=======
+export type AdminSession = { _id: string; createdAt: Date; expireAt: Date; ip: string | null; ua: string | null };
+>>>>>>> origin/main
 
 export type Commission = {
   _id: ObjectId;
@@ -212,10 +219,13 @@ async function ensureIndexes(db: Db) {
     db.collection("passwordResets").createIndex({ expiresAt: 1 }, { expireAfterSeconds: 0 }),
     db.collection("passwordResets").createIndex({ userId: 1 }),
     db.collection("adminSessions").createIndex({ expireAt: 1 }, { expireAfterSeconds: 0 }),
+<<<<<<< HEAD
     db.collection("services").createIndex({ order: 1 }),
     db.collection("adminUsers").createIndex({ email: 1 }, { unique: true }),
     db.collection("adminSessions").createIndex({ adminId: 1 }),
     db.collection("adminActivity").createIndex({ at: -1 }),
+=======
+>>>>>>> origin/main
   ]);
 }
 
@@ -249,10 +259,13 @@ export async function cols() {
     activity: c<Activity>("activity"),
     passwordResets: c<PasswordReset>("passwordResets"),
     adminSessions: c<AdminSession>("adminSessions"),
+<<<<<<< HEAD
     adminUsers: c<AdminUser>("adminUsers"),
     adminActivity: c<AdminActivity>("adminActivity"),
     siteConfig: c<SiteConfigDoc>("siteConfig"),
     services: c<ServiceDoc>("services"),
+=======
+>>>>>>> origin/main
   };
 }
 

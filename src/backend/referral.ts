@@ -1,6 +1,10 @@
 import "server-only"; // backend only — never bundled into the browser
 import { cols, hex, oid, ObjectId, type Commission, type Order, type User } from "@/backend/mongo";
+<<<<<<< HEAD
 import { getSite } from "@/backend/config";
+=======
+import { REFERRAL_RATE } from "@/shared/site";
+>>>>>>> origin/main
 
 const ACTIVE = ["processing", "approved", "completed"];
 
@@ -28,7 +32,11 @@ export async function syncCommission(order: Order): Promise<{ created: Commissio
   const refUser = oid(buyer.referredBy) ? await users.findOne({ _id: oid(buyer.referredBy)! }) : null;
   if (!refUser) return none; // the referrer account no longer exists
 
+<<<<<<< HEAD
   const amount = Math.round(order.total * (await getSite()).referralRate);
+=======
+  const amount = Math.round(order.total * REFERRAL_RATE);
+>>>>>>> origin/main
   const existing = await commissions.findOne({ orderId });
   if (existing) {
     if (existing.status !== "earned") await commissions.updateOne({ _id: existing._id }, { $set: { status: "earned", amount, updatedAt: now } });
@@ -82,7 +90,11 @@ export async function referralOverview(userId: string) {
     ? await orders.find({ userId: { $in: ids } }, { projection: { userId: 1, total: 1, status: 1 } }).toArray()
     : [];
   const pendingOrders = refOrders.filter((o) => o.status === "pending_review");
+<<<<<<< HEAD
   const pending = Math.round(pendingOrders.reduce((a, o) => a + o.total, 0) * (await getSite()).referralRate);
+=======
+  const pending = Math.round(pendingOrders.reduce((a, o) => a + o.total, 0) * REFERRAL_RATE);
+>>>>>>> origin/main
   const referredRows = referred.map((r) => {
     const id = hex(r._id);
     const mine = refOrders.filter((o) => o.userId === id);

@@ -1,13 +1,23 @@
 import "server-only"; // backend only — never bundled into the browser
+<<<<<<< HEAD
 import { addLog, adminEmail, getSetting, sendMail, type MailAttachment } from "@/backend/mail";
 import { adminAlert } from "@/backend/emailTemplates";
 import { getSite } from "@/backend/config";
+=======
+import { addLog, getSetting, sendMail, ADMIN_EMAIL, type MailAttachment } from "@/backend/mail";
+import { adminAlert } from "@/backend/emailTemplates";
+import { SITE } from "@/shared/site";
+>>>>>>> origin/main
 
 /** WhatsApp via CallMeBot (needs a one-time free API key saved in Admin → Notifications). */
 export async function sendWhatsApp(text: string): Promise<{ ok: boolean; skipped?: boolean; error?: string }> {
   const key = (process.env.CALLMEBOT_KEY || (await getSetting("wa_key"))) ?? "";
   if (!key) return { ok: false, skipped: true };
+<<<<<<< HEAD
   const phone = (process.env.CALLMEBOT_PHONE || (await getSetting("wa_phone")) || (await getSite()).whatsapp).replace(/\D/g, "");
+=======
+  const phone = (process.env.CALLMEBOT_PHONE || (await getSetting("wa_phone")) || SITE.whatsapp).replace(/\D/g, "");
+>>>>>>> origin/main
   let status = "sent";
   let error: string | null = null;
   try {
@@ -38,16 +48,26 @@ export type AdminNotice = {
 /** Alerts the company on every important action: email + WhatsApp (when configured). Never throws. */
 export async function notifyAdmin(n: AdminNotice) {
   try {
+<<<<<<< HEAD
     const a = await adminAlert(n.title, n.lines, n.link);
     await sendMail({
       to: await adminEmail(),
+=======
+    const a = adminAlert(n.title, n.lines, n.link);
+    await sendMail({
+      to: ADMIN_EMAIL,
+>>>>>>> origin/main
       ...a,
       replyTo: n.replyTo,
       attachments: n.attachments,
       kind: "admin_alert",
       orderId: n.orderId ?? null,
     });
+<<<<<<< HEAD
     await sendWhatsApp(`*${(await getSite()).name}*\n${n.title}\n${n.lines.join("\n")}${n.link ? `\n${n.link}` : ""}`);
+=======
+    await sendWhatsApp(`*${SITE.name}*\n${n.title}\n${n.lines.join("\n")}${n.link ? `\n${n.link}` : ""}`);
+>>>>>>> origin/main
   } catch (e) {
     console.error("[notifyAdmin]", e);
   }

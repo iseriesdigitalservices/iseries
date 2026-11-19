@@ -8,8 +8,12 @@ import { Binary, ObjectId, cols, hex, oid, type Order, type OrderDocFile, type O
 import { notifyAdmin } from "@/backend/notify";
 import { rateLimit, sniffMime, tooMany } from "@/backend/security";
 import { orderReceivedCustomer } from "@/backend/emailTemplates";
+<<<<<<< HEAD
 import { docsFor, findService, formatPKR, priceMap } from "@/shared/site";
 import { getServices } from "@/backend/config";
+=======
+import { PRICES, docsFor, formatPKR, getService } from "@/shared/site";
+>>>>>>> origin/main
 
 export const dynamic = "force-dynamic";
 
@@ -60,11 +64,17 @@ export async function POST(req: Request) {
   if (!/^[+\d][\d\s\-()]{6,28}$/.test(phone)) return err("Please enter a valid phone / WhatsApp number.");
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return err("Please enter a valid email address (needed for order updates).");
 
+<<<<<<< HEAD
   const catalog = await getServices();
   const PRICES = priceMap(catalog);
   const items: OrderItem[] = [];
   for (const slug of slugs) {
     const svc = findService(catalog, slug);
+=======
+  const items: OrderItem[] = [];
+  for (const slug of slugs) {
+    const svc = getService(slug);
+>>>>>>> origin/main
     const price = PRICES[slug];
     if (svc && price != null) items.push({ slug, title: svc.title, price });
   }
@@ -79,7 +89,11 @@ export async function POST(req: Request) {
   if ("error" in slip) return err(slip.error);
 
   const docs: { label: string; up: { buf: Buffer; mime: string; name: string } }[] = [];
+<<<<<<< HEAD
   for (const d of docsFor(catalog, items.map((i) => i.slug))) {
+=======
+  for (const d of docsFor(items.map((i) => i.slug))) {
+>>>>>>> origin/main
     const raw = fd.get(d.key);
     if (!(raw instanceof File) || raw.size === 0) {
       if (d.required) return err(`Please upload: ${d.label}.`);
@@ -162,7 +176,11 @@ export async function POST(req: Request) {
         replyTo: email,
         attachments,
       });
+<<<<<<< HEAD
       await sendMail({ to: email, ...(await orderReceivedCustomer(created, `${origin}/account/orders/${created.orderNo}`)), kind: "customer_notice", orderId: hex(created._id) });
+=======
+      await sendMail({ to: email, ...orderReceivedCustomer(created, `${origin}/account/orders/${created.orderNo}`), kind: "customer_notice", orderId: hex(created._id) });
+>>>>>>> origin/main
     });
     return NextResponse.json({ ok: true, orderNo: created.orderNo, total }, { status: 201 });
   } catch (e) {

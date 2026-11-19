@@ -5,12 +5,19 @@ import { ArrowRight, ShoppingCart, Trash2 } from "lucide-react";
 import Header from "@/frontend/components/Header";
 import Footer from "@/frontend/components/Footer";
 import { useCart } from "@/frontend/components/CartProvider";
+<<<<<<< HEAD
 import { formatPKR } from "@/shared/site";
 import { useCatalog } from "@/frontend/SiteProvider";
 
 export default function CartPage() {
   const { items, remove, add, total, ready } = useCart();
   const { services: SERVICES, prices: PRICES, get: getService } = useCatalog();
+=======
+import { PRICES, SERVICES, formatPKR, getService } from "@/shared/site";
+
+export default function CartPage() {
+  const { items, remove, add, total, ready } = useCart();
+>>>>>>> origin/main
   const others = SERVICES.filter((s) => PRICES[s.slug] != null && !items.includes(s.slug));
 
   return (

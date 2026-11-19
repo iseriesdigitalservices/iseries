@@ -4,8 +4,12 @@ import Footer from "@/frontend/components/Footer";
 import ResubmitForm from "@/frontend/components/ResubmitForm";
 import { cols, hex, type Order } from "@/backend/mongo";
 import { normPhone } from "@/backend/admin";
+<<<<<<< HEAD
 import { ORDER_STATUS, formatPKR } from "@/shared/site";
 import { getSite } from "@/backend/config";
+=======
+import { ORDER_STATUS, SITE, formatPKR } from "@/shared/site";
+>>>>>>> origin/main
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Track Order — I Series Digital Services" };
@@ -18,7 +22,10 @@ const STEPS = [
 
 export default async function TrackPage({ searchParams }: { searchParams: Promise<{ order?: string; phone?: string }> }) {
   const sp = await searchParams;
+<<<<<<< HEAD
   const SITE = await getSite();
+=======
+>>>>>>> origin/main
   const orderNo = (sp.order || "").trim().toUpperCase();
   const phone = sp.phone || "";
   let order: Order | null = null;

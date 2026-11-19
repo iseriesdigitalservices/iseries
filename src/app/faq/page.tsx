@@ -4,8 +4,11 @@ import Footer from "@/frontend/components/Footer";
 import PageBanner from "@/frontend/components/PageBanner";
 import FaqList from "@/frontend/components/FaqList";
 
+<<<<<<< HEAD
 export const dynamic = "force-dynamic";
 
+=======
+>>>>>>> origin/main
 export const metadata = { title: "FAQ — I Series Digital Services" };
 
 export default function FaqPage() {

@@ -44,10 +44,13 @@ export default function AdminForm({ action, children, className, confirm: confir
       setMsg({ ok: !!json.ok, text: json.message || (json.ok ? "Done" : "Failed") });
       if (json.ok) {
         if (json.reset) ref.current?.reset();
+<<<<<<< HEAD
         if (json.logout) {
           setTimeout(() => window.location.assign("/admin"), 1200);
           return;
         }
+=======
+>>>>>>> origin/main
         if (redirectTo) {
           window.location.href = redirectTo;
           return;

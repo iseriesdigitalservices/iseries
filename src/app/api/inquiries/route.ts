@@ -44,7 +44,11 @@ export async function POST(req: Request) {
         link: `${origin}/admin/inquiries`,
         replyTo: email || undefined,
       });
+<<<<<<< HEAD
       if (email) await sendMail({ to: email, ...(await inquiryAckCustomer(name)), kind: "customer_notice" });
+=======
+      if (email) await sendMail({ to: email, ...inquiryAckCustomer(name), kind: "customer_notice" });
+>>>>>>> origin/main
     });
     return NextResponse.json({ ok: true }, { status: 201 });
   } catch (e) {

@@ -2,13 +2,20 @@
 
 import { useState } from "react";
 import { CheckCircle2, Loader2, Send } from "lucide-react";
+<<<<<<< HEAD
 import { useServices } from "@/frontend/SiteProvider";
+=======
+import { SERVICES } from "@/shared/site";
+>>>>>>> origin/main
 
 const field =
   "w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-black focus:ring-4 focus:ring-black/10 dark:focus:border-[#f5c518] dark:focus:ring-[#f5c518]/20";
 
 export default function ContactForm() {
+<<<<<<< HEAD
   const SERVICES = useServices();
+=======
+>>>>>>> origin/main
   const [status, setStatus] = useState<"idle" | "loading" | "done">("idle");
   const [error, setError] = useState("");
 
